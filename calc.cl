@@ -6,8 +6,12 @@ typedef struct {
 typedef struct {
     int iterations;
     float hole_radius;
-    float hole_offset;
-    float hole_x;
+    float hole1_x;
+    float hole1_y;
+    float hole2_x;
+    float hole2_y;
+
+
 } settings_data;
 
 typedef struct {
@@ -46,9 +50,8 @@ __kernel void check_inside(__global vector* positions,
     __private vector val = positions[global_id];
     __private vector c = positions[global_id];
 
-
-    __private vector neg_hole_1 = {-settings->hole_offset-settings->hole_x, 0};
-    __private vector neg_hole_2 = {settings->hole_offset-settings->hole_x, 0};
+    __private vector neg_hole_1 = {-settings->hole1_x, -settings->hole1_y};
+    __private vector neg_hole_2 = {-settings->hole2_x, -settings->hole2_y};
 
     __private vector to_hole_1 = sum(&c, &neg_hole_1);
     __private vector to_hole_2 = sum(&c, &neg_hole_2);
